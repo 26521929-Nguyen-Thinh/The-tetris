@@ -1,0 +1,16 @@
+Hợp đồng nhóm
+
+Phải có chữ ký của tất cả thành viên.
+Có thể scan chữ ký tay hoặc dùng chữ ký điện tử.
+Các link công cụ nhóm đã dùng
+
+Ghi rõ các link: Trello, Git, Slack, Overleaf… mà nhóm sử dụng trong quá trình làm việc. Trong Git chỉ có code khởi tạo của game Tetris mà giảng viên cung cấp (sinh viên chưa viết thêm).
+Phần giới thiệu và hướng dẫn chơi game
+
+Dựa trên các phiên bản game Tetris thông dụng đã có sẵn (giai đoạn này các bạn chưa cần lập trình game của mình). Viết phần giới thiệu về game Tetris:
+Game này ra sao?
+Cách chơi dành cho người dùng cuối
+Các chức năng chính
+Viết sao cho hấp dẫn, dễ hiểu.
+Độ dài: tối thiểu 2 trang, tối đa 10 trang.
+→ Phần này giúp các bạn hình dung và thiết kế game của nhóm mình sau này sẽ có những chức năng gì.

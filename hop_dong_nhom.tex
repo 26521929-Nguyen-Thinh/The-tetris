@@ -1,0 +1,352 @@
+% =====================================================================
+%  BÁO CÁO: HỢP ĐỒNG NHÓM & GIỚI THIỆU GAME TETRIS
+% =====================================================================
+\documentclass[12pt,a4paper,oneside]{report}
+% Đặt cỡ chữ 13pt cho toàn bộ văn bản
+\AtBeginDocument{\fontsize{13pt}{16.8pt}\selectfont}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+  \usepackage{mathptmx}
+\else
+  \usepackage{fontspec}
+  \setmainfont{texgyretermes}[
+    Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,
+    ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+\fi
+
+% ---------- Khổ giấy, lề, giãn dòng ----------
+\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.3}
+\usepackage{parskip}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{1cm}
+\usepackage{indentfirst}
+\sloppy
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    citecolor=blue,
+    linkcolor=black,   % Giữ màu đen cho mục lục
+    urlcolor=blue
+}
+
+\setlist{itemsep=0pt,topsep=2pt,leftmargin=1.5cm}
+
+% ---------- Định dạng tiêu đề chương / mục ----------
+\titleformat{\chapter}[display]
+  {\centering\bfseries\large}{CHƯƠNG \thechapter}{4pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+\titleformat{\section}{\bfseries\normalsize}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\bfseries\itshape\normalsize}{\thesubsection.}{0.5em}{}
+
+% ---------- Header / footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Trường ĐH Công nghệ Thông tin -- ĐHQG-HCM}
+\fancyhead[R]{\small Báo cáo môn học}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---------- Chữ ký: dùng ảnh nếu có file, không thì để trống ô ký ----------
+\newcommand{\chuky}[1]{\IfFileExists{#1}{\includegraphics[height=2cm,width=4cm,keepaspectratio]{#1}}{\rule{0pt}{2cm}}}
+
+\begin{document}
+
+% Đặt lại tên các mục (sau \begin{document} để babel không ghi đè)
+\renewcommand{\contentsname}{MỤC LỤC}
+\renewcommand{\tablename}{Bảng}
+\renewcommand{\bibname}{NGUỒN THAM KHẢO}
+
+% =========================== TRANG BÌA ==============================
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay]
+  \draw[line width=2pt]
+    ([xshift=2cm,yshift=-1.5cm]current page.north west)
+    rectangle ([xshift=-1.5cm,yshift=1.5cm]current page.south east);
+  \draw[line width=0.6pt]
+    ([xshift=2.15cm,yshift=-1.65cm]current page.north west)
+    rectangle ([xshift=-1.65cm,yshift=1.65cm]current page.south east);
+\end{tikzpicture}
+\begin{center}
+\setstretch{1.2}
+{\large ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\
+{\large\bfseries TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN}\\
+{\large\bfseries KHOA KHOA HỌC MÁY TÍNH}\\[2pt]
+\rule{6cm}{0.6pt}\\[1cm]
+
+\IfFileExists{logo_UIT.jpg}{%
+  \includegraphics[width=4.2cm]{logo_UIT.jpg}%
+}{%
+  \fbox{\parbox[c][3.5cm][c]{3.5cm}{\centering LOGO UIT\\\small(logo\_UIT.jpg)}}%
+}\\[1cm]
+
+{\Large\bfseries BÁO CÁO MÔN HỌC}\\[4pt]
+{\large KỸ NĂNG NGHỀ NGHIỆP -- SS004}\\[1.2cm]
+
+{\large\bfseries ĐỀ TÀI:}\\[6pt]
+{\LARGE\bfseries HỢP ĐỒNG NHÓM VÀ\\[4pt]
+GIỚI THIỆU GAME TETRIS}\\[1.5cm]
+
+\begin{tabular}{ll}
+\textbf{Giảng viên hướng dẫn:} & Nguyễn Văn Toàn\\[4pt]
+\textbf{Sinh viên thực hiện:}  & Nguyễn Thịnh -- MSSV: 26521929\\
+                               & Nguyễn Việt Lâm -- MSSV: 26521077\\
+                               & Trương Tấn Phát -- MSSV: 26521563\\
+                               & Thái Trí Nhân -- MSSV: 26521457\\
+                               & Võ Ngọc Thơ -- MSSV: 25521792\\[4pt]
+\textbf{Lớp:}                  & SS004.R11\\
+\end{tabular}
+
+\vfill
+{\large TP. Hồ Chí Minh, tháng 11 năm 2026}
+\end{center}
+\end{titlepage}
+
+% =========================== MỤC LỤC ================================
+\pagenumbering{roman}
+\setcounter{page}{1}
+\tableofcontents
+\thispagestyle{empty}
+
+% =========================== NỘI DUNG ===============================
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% --------------------------------------------------------------------
+%  CHƯƠNG 1 -- Hợp đồng nhóm
+% --------------------------------------------------------------------
+\chapter{Hợp đồng nhóm}
+
+\section{Tên nhóm: [TÊN NHÓM]}
+
+\section{Thành viên nhóm}
+
+\begin{table}[H]
+\centering
+\vspace{-0.8cm}
+\caption{Danh sách thành viên nhóm}\label{tab:danh_sach_thanh_vien}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{4.5cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{3.5cm}|}
+\hline
+\textbf{STT} & \textbf{Họ và tên} & \textbf{MSSV} & \textbf{Vai trò chính} \\ \hline
+1 & Nguyễn Thịnh    & 26521929 & Trưởng nhóm \\ \hline
+2 & Nguyễn Việt Lâm & 26521077 & Thành viên \\ \hline
+3 & Trương Tấn Phát & 26521563 & Thành viên \\ \hline
+4 & Thái Trí Nhân   & 26521457 & Thành viên \\ \hline
+5 & Võ Ngọc Thơ     & 25521792 & Thành viên \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Mục tiêu của nhóm}
+
+\begin{itemize}
+    \item Hoàn thành đầy đủ các nội dung của bài tập và nộp đúng thời hạn theo yêu cầu của học phần.
+    \item Tìm hiểu các phiên bản game Tetris thông dụng để viết phần giới thiệu, hướng dẫn chơi và xác định các chức năng chính, làm cơ sở thiết kế game của nhóm ở các giai đoạn sau.
+    \item Thống nhất cách làm việc, phân công rõ trách nhiệm và bảo đảm mỗi thành viên đều có phần việc cụ thể.
+    \item Sử dụng hiệu quả các công cụ làm việc nhóm như Slack, Trello, GitHub và Overleaf để trao đổi, quản lý tiến độ, quản lý mã nguồn và biên soạn tài liệu.
+    \item Rèn luyện kỹ năng giao tiếp, phối hợp, giải quyết vấn đề, quản lý thời gian và chịu trách nhiệm với phần việc được giao.
+\end{itemize}
+
+\section{Nội dung báo cáo}
+
+Báo cáo của nhóm gồm các phần sau:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Hợp đồng nhóm:} thành viên, mục tiêu, phân công, công cụ làm việc, quy định, tiêu chí đánh giá và chữ ký của tất cả thành viên.
+    \item \textbf{Các link công cụ nhóm sử dụng:} Slack, Trello, GitHub, Overleaf. Repository GitHub chỉ chứa code khởi tạo của game Tetris do giảng viên cung cấp.
+    \item \textbf{Giới thiệu và hướng dẫn chơi game Tetris:} dựa trên các phiên bản Tetris thông dụng, trình bày game này ra sao, cách chơi dành cho người dùng cuối và các chức năng chính. Độ dài từ 2 đến 10 trang, viết hấp dẫn, dễ hiểu.
+    \item \textbf{Đánh giá thực hiện hợp đồng nhóm:} đánh giá từng thành viên theo tiêu chí ở mục~\ref{sec:tieu_chi}.
+\end{enumerate}
+
+\section{Phân công nhiệm vụ}
+
+\begin{table}[H]
+\centering
+\vspace{-0.8cm}
+\caption{Phân công nhiệm vụ các thành viên}\label{tab:phan_cong_nhiem_vu}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{|>{\raggedright}p{3.4cm}|>{\raggedright\arraybackslash}p{9.2cm}|}
+\hline
+\textbf{Thành viên} & \textbf{Nhiệm vụ} \\ \hline
+Nguyễn Thịnh &
+Trưởng nhóm: phân công công việc, theo dõi tiến độ trên Trello; quản lý repository GitHub; biên soạn hợp đồng nhóm; nhận file \texttt{.tex} của các thành viên và đồng bộ vào Overleaf; đồng bộ bản cuối cùng lên GitHub.
+\\ \hline
+Nguyễn Việt Lâm &
+Viết phần giới thiệu game Tetris: lịch sử, ý tưởng game này ra sao.
+\\ \hline
+Trương Tấn Phát &
+Rà soát toàn bộ báo cáo: kiểm tra chính tả, định dạng thống nhất giữa các phần và nguồn tham khảo.
+\\ \hline
+Thái Trí Nhân &
+Viết phần các chức năng chính của game; tìm hình minh họa cho báo cáo.
+\\ \hline
+Võ Ngọc Thơ &
+Viết phần cách chơi dành cho người dùng cuối: luật chơi, phím điều khiển, cách tính điểm, điều kiện thua.
+\\ \hline
+\end{tabular}
+\end{table}
+
+\textbf{Thời hạn chung:} hoàn thành toàn bộ báo cáo trước 23:59 ngày 11/11/2026.
+
+Overleaf là bản chính của báo cáo (do Overleaf giới hạn số người được chỉnh sửa, các thành viên khác chỉ có quyền xem). Mỗi thành viên sau khi hoàn thành phần việc của mình gửi file \texttt{.tex} của phần đó qua Slack cho trưởng nhóm để đồng bộ vào Overleaf. File \texttt{hop\_dong\_nhom.tex} trên GitHub chỉ được đồng bộ một lần khi báo cáo hoàn tất.
+
+\section{Công cụ và không gian làm việc nhóm}
+
+Nhóm sử dụng các công cụ/không gian trực tuyến để trao đổi, quản lý công việc, quản lý mã nguồn và biên soạn tài liệu.
+
+\begin{table}[H]
+\centering
+\caption{Danh sách công cụ và không gian làm việc nhóm}\label{tab:cong_cu_lam_viec}
+\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{6.2cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
+\hline
+\textbf{Công cụ} & \textbf{Mục đích sử dụng} & \textbf{Link} \\ \hline
+\textbf{Slack} &
+Kênh trao đổi chính của nhóm; trao đổi công việc, thông báo và giải quyết thắc mắc &
+\url{https://app.slack.com/client/T0BV8JTK6QH/C0CFTHSUY5C} \\ \hline
+\textbf{Trello} &
+Phân công nhiệm vụ, theo dõi trạng thái công việc và tiến độ &
+\url{https://trello.com/invite/b/6af011e459b2a704ab3a241d/ATTI8d77df4ce00143fb38765a5affeeefc69B915E21/tetris} \\ \hline
+\textbf{GitHub} &
+Quản lý mã nguồn game Tetris (hiện chỉ có code khởi tạo do giảng viên cung cấp); lưu bản báo cáo cuối cùng &
+\url{https://github.com/26521929-Nguyen-Thinh/The-tetris} \\ \hline
+\textbf{Overleaf} &
+Bản chính của báo cáo (LaTeX); trưởng nhóm chỉnh sửa, các thành viên xem và góp ý &
+\url{https://www.overleaf.com/project/6af006b50925752415376809/share#0d2864ee799ce7b692dc5eb9b5288f7eee1bafbbcddd25bc} \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Quy định làm việc}
+
+\begin{itemize}
+    \item Mọi trao đổi chính thức thực hiện trên Slack; thành viên phản hồi tin nhắn của nhóm trong vòng 24 giờ.
+    \item Mỗi nhiệm vụ được tạo thành thẻ trên Trello, có người phụ trách và hạn hoàn thành; thành viên tự cập nhật trạng thái thẻ.
+    \item Mỗi thành viên gửi file \texttt{.tex} phần việc của mình qua Slack cho trưởng nhóm; trưởng nhóm đồng bộ vào Overleaf để cả nhóm rà soát. Góp ý cho phần của người khác gửi trên Slack, không tự sửa.
+    \item Quyết định chung được thông qua theo đa số; nếu không thống nhất, trưởng nhóm quyết định cuối cùng.
+    \item Thành viên trễ hạn phải báo trước cho nhóm. Trễ hạn nhiều lần hoặc không đóng góp sẽ được ghi nhận trong phần đánh giá và báo cáo với giảng viên.
+\end{itemize}
+
+\section{Tiêu chí đánh giá hợp tác nhóm}\label{sec:tieu_chi}
+
+\begin{table}[H]
+\centering
+\small
+\vspace{-0.8cm}
+\caption{Tiêu chí đánh giá hợp tác nhóm}\label{tab:rubric_danh_gia}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|>{\raggedright}p{2.2cm}|>{\raggedright\arraybackslash}p{3cm}|>{\raggedright\arraybackslash}p{3cm}|>{\raggedright\arraybackslash}p{3cm}|>{\raggedright\arraybackslash}p{3cm}|}
+\hline
+\textbf{Tiêu chí} &
+\textbf{4 -- Xuất sắc} &
+\textbf{3 -- Tốt} &
+\textbf{2 -- Đạt} &
+\textbf{1 -- Chưa đạt} \\ \hline
+Thái độ &
+Luôn tích cực, tôn trọng và hỗ trợ thành viên khác. &
+Thái độ tích cực, không phát sinh vấn đề. &
+Thái độ tích cực, nhưng đôi lúc cần nhắc nhở. &
+Thái độ tiêu cực, gây ảnh hưởng đến hoạt động nhóm. \\ \hline
+Đóng góp &
+Chủ động đưa ra ý tưởng, hoàn thành nhiệm vụ vượt yêu cầu. &
+Có đóng góp và hoàn thành nhiệm vụ. &
+Có đóng góp nhưng đôi lúc cần nhắc nhở. &
+Không đóng góp. \\ \hline
+Quản lý thời gian &
+Hoàn thành nhiệm vụ trước thời hạn. &
+Hoàn thành nhiệm vụ đúng thời hạn. &
+Hoàn thành nhiệm vụ đúng thời hạn nhưng đôi lúc chậm hoặc cần hỗ trợ. &
+Không hoàn thành hoặc trễ hạn nhiều lần. \\ \hline
+Đóng góp ý kiến &
+Chủ động đưa ra ý kiến. &
+Đưa ra ý kiến khi cần thiết. &
+Chỉ đưa ra ý kiến khi được hỏi. &
+Không đưa ra ý kiến cho nhóm. \\ \hline
+Làm việc nhóm &
+Luôn lắng nghe, đóng góp, hỗ trợ các thành viên khác trong quá trình làm việc nhóm. &
+Luôn tham gia làm việc nhóm. &
+Có tham gia làm việc nhóm. &
+Không tham gia làm việc nhóm, gây ảnh hưởng đến hoạt động của nhóm. \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Cam kết của nhóm}
+
+Chúng tôi thống nhất các nội dung trên và cam kết phối hợp, hoàn thành phần việc được giao, tôn trọng quyết định chung và cùng chịu trách nhiệm về sản phẩm cuối cùng của nhóm.
+
+% Ảnh chữ ký đặt cùng thư mục: thinh.png, lam.png, phat.png, nhan.png, tho.png
+\vspace{8pt}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{ccc}
+\textbf{Trưởng nhóm} & \textbf{Thành viên} & \textbf{Thành viên}\\
+\textit{(Ký, ghi rõ họ tên)} & \textit{(Ký, ghi rõ họ tên)} & \textit{(Ký, ghi rõ họ tên)} \\
+\chuky{thinh.png} & \chuky{lam.png} & \chuky{phat.png} \\
+\textbf{Nguyễn Thịnh} & \textbf{Nguyễn Việt Lâm} & \textbf{Trương Tấn Phát}\\[16pt]
+\end{tabular}
+
+\begin{tabular}{cc}
+\textbf{Thành viên} & \textbf{Thành viên}\\
+\textit{(Ký, ghi rõ họ tên)} & \textit{(Ký, ghi rõ họ tên)} \\
+\chuky{nhan.png} & \chuky{tho.png} \\
+\textbf{Thái Trí Nhân} & \textbf{Võ Ngọc Thơ}\\
+\end{tabular}
+\end{center}
+
+% --------------------------------------------------------------------
+%  CHƯƠNG 2 -- Giới thiệu và hướng dẫn chơi game Tetris (2--10 trang)
+% --------------------------------------------------------------------
+\chapter{Giới thiệu và hướng dẫn chơi game Tetris}
+
+\section{Giới thiệu game Tetris}
+
+\section{Cách chơi}
+
+\section{Các chức năng chính}
+
+% --------------------------------------------------------------------
+%  CHƯƠNG 3 -- Đánh giá thực hiện hợp đồng nhóm
+% --------------------------------------------------------------------
+\chapter{Đánh giá thực hiện hợp đồng nhóm}
+
+% Điền mức đánh giá theo bảng tiêu chí ở mục \ref{sec:tieu_chi} (Xuất sắc / Tốt / Đạt / Chưa đạt)
+\begin{table}[H]
+\centering
+\small
+\caption{Đánh giá các thành viên}\label{tab:danh_gia_thanh_vien}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|*{5}{>{\centering\arraybackslash}p{2.2cm}|}}
+\hline
+\textbf{Tiêu chí} & \textbf{Nguyễn Thịnh} & \textbf{Nguyễn Việt Lâm} & \textbf{Trương Tấn Phát} & \textbf{Thái Trí Nhân} & \textbf{Võ Ngọc Thơ} \\ \hline
+Thái độ           & & & & & \\ \hline
+Đóng góp          & & & & & \\ \hline
+Quản lý thời gian & & & & & \\ \hline
+Đóng góp ý kiến   & & & & & \\ \hline
+Làm việc nhóm     & & & & & \\ \hline
+\end{tabular}
+\end{table}
+
+% =========================== TÀI LIỆU THAM KHẢO =====================
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{NGUỒN THAM KHẢO}
+\small
+\bibitem{placeholder} [Nguồn tham khảo]
+\end{thebibliography}
+
+\end{document}
