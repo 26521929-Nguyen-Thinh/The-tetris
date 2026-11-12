@@ -1,0 +1,157 @@
+% =====================================================================
+%  PHẦN: CÁCH CHƠI (luật chơi, phím điều khiển, tính điểm, cấp độ, điều kiện thua)
+%  Người viết: Thái Trí Nhân
+% =====================================================================
+
+Tetris là một trong số ít trò chơi mà bạn có thể hiểu luật chỉ sau vài giây quan sát: các khối gạch rơi từ trên xuống, việc của bạn là sắp chúng thật gọn để lấp kín từng hàng ngang. Hàng nào kín, hàng đó biến mất. Nghe đơn giản, nhưng khi các khối rơi nhanh dần, mỗi quyết định đều phải đưa ra trong chớp mắt. Phần này hướng dẫn cách chơi theo luật chung của các phiên bản Tetris thông dụng hiện nay, chủ yếu theo bộ quy chuẩn \textit{Tetris Guideline} mà các bản chính thức tuân theo~\cite{tetris_wiki,tetris_guideline}.
+
+\subsection{Luật chơi}
+
+Tetris là trò chơi xếp hình trong đó người chơi điều khiển các khối
+gạch rơi từ phía trên xuống khu vực chơi nhằm hoàn thành các hàng
+ngang. Khi một hàng được lấp đầy hoàn toàn, hàng đó sẽ bị xóa và
+các khối phía trên dịch chuyển xuống để lấp khoảng trống. Mặc dù
+luật chơi tương đối đơn giản, tốc độ rơi tăng dần khiến việc sắp
+xếp khối trở nên khó khăn hơn theo thời gian. Mục tiêu của người
+chơi là xóa càng nhiều hàng càng tốt, đạt điểm số cao và tránh để
+các khối chất lên quá cao khiến trò chơi kết thúc
+\cite{tetris_official,tetris_guideline}.
+
+Khu vực chơi tiêu chuẩn thường có chiều rộng $10$ cột và $20$ hàng
+hiển thị. Một số phiên bản còn sử dụng vùng ẩn phía trên khu vực
+này để tạo khối mới và xử lý các tình huống khối vượt quá giới hạn
+hiển thị. Trong mỗi lượt, một khối \textit{tetromino} gồm bốn ô
+vuông xuất hiện ở phía trên khu vực chơi và tự động rơi xuống.
+Người chơi có thể di chuyển khối sang trái hoặc phải, xoay khối
+và điều chỉnh tốc độ rơi để đưa khối đến vị trí phù hợp. Khi khối
+chạm đáy hoặc các khối đã được đặt trước đó, nó sẽ được khóa tại
+vị trí hiện tại và trở thành một phần của khu vực chơi. Trong nhiều
+phiên bản hiện đại, người chơi còn có một khoảng thời gian ngắn
+sau khi khối chạm bề mặt để tiếp tục di chuyển hoặc xoay trước
+khi khối bị khóa hoàn toàn. Cơ chế này được gọi là
+\textit{lock delay}~\cite{tetris_guideline,tetris_lock}.
+
+Khi một hàng ngang được lấp đầy hoàn toàn, hàng đó sẽ biến mất
+và các hàng phía trên dịch chuyển xuống để lấp khoảng trống.
+Nếu nhiều hàng được hoàn thành cùng lúc, tất cả các hàng đó sẽ
+được xóa trong cùng một lần. Ngoài việc điều khiển khối đang
+rơi, người chơi có thể quan sát các khối sắp xuất hiện
+(\textit{next}), cất giữ một khối để sử dụng sau (\textit{hold})
+và theo dõi vị trí mà khối sẽ tiếp đất thông qua hình ảnh khối
+bóng (\textit{ghost piece}). Những tính năng này giúp người chơi
+chủ động hơn trong việc lựa chọn và sắp xếp vị trí đặt khối
+\cite{tetris_guideline}.
+
+Các phiên bản Tetris hiện đại thường sử dụng cơ chế sinh khối
+\textit{7-bag}, trong đó bảy loại khối được xáo trộn và lần lượt
+xuất hiện trước khi một nhóm mới được tạo ra. Nhờ vậy, mỗi nhóm
+bảy khối đều chứa đủ các loại khối khác nhau, hạn chế tình trạng
+người chơi phải chờ quá lâu để xuất hiện một loại khối cần thiết.
+Tuy nhiên, cơ chế sinh khối và các tính năng hỗ trợ có thể thay
+đổi tùy theo phiên bản hoặc chế độ chơi
+\cite{tetris_randomizer,tetris_guideline}.
+
+\subsection{Phím điều khiển}
+
+Các phím điều khiển có thể thay đổi tùy theo phiên bản trò chơi
+và thường cho phép người chơi tùy chỉnh. Bảng~\ref{tab:dieu_khien}
+trình bày cách bố trí phím phổ biến trên máy tính, dựa trên các
+thao tác điều khiển thường gặp trong Tetris
+\cite{tetris_official,tetris_guideline}.
+
+\begin{table}[H]
+\centering
+\caption{Các thao tác điều khiển thông dụng trong Tetris}
+\label{tab:dieu_khien}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.8cm} c >{\raggedright\arraybackslash}p{6.6cm}}
+\toprule
+\textbf{Thao tác} & \textbf{Phím thường gặp} & \textbf{Tác dụng} \\
+\midrule
+Sang trái / phải & $\leftarrow$ / $\rightarrow$ & Di chuyển khối sang trái hoặc phải một cột; giữ phím để di chuyển liên tục. \\
+Xoay theo chiều kim đồng hồ & $\uparrow$ & Xoay khối $90^\circ$ theo chiều kim đồng hồ. \\
+Xoay ngược chiều kim đồng hồ & Z & Xoay khối $90^\circ$ ngược chiều kim đồng hồ. \\
+Hạ từ từ (\textit{soft drop}) & $\downarrow$ & Tăng tốc độ rơi của khối trong khi vẫn có thể điều khiển. \\
+Thả rơi nhanh (\textit{hard drop}) & Space & Đưa khối xuống vị trí thấp nhất có thể và khóa tại đó. \\
+Cất giữ khối (\textit{hold}) & C & Cất khối hiện tại hoặc đổi với khối đã cất trước đó. \\
+Tạm dừng & Esc & Tạm dừng hoặc tiếp tục trò chơi. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cách tính điểm}
+
+Điểm số chủ yếu được tính dựa trên số hàng được xóa trong mỗi
+lần khóa khối. Trong các phiên bản Tetris hiện đại thông dụng,
+xóa nhiều hàng cùng lúc sẽ nhận được điểm cơ bản cao hơn so với
+xóa từng hàng riêng lẻ. Bảng~\ref{tab:diem_chung} trình bày mức
+điểm cơ bản của hệ thống tính điểm phổ biến ở cấp độ $1$, chưa
+bao gồm các phần thưởng bổ sung
+\cite{tetris_scoring,tetris_official}.
+
+\begin{table}[H]
+\centering
+\caption{Điểm cơ bản cho mỗi lần xóa hàng ở cấp độ $1$}
+\label{tab:diem_chung}
+\begin{tabular}{c c}
+\toprule
+\textbf{Số hàng xóa cùng lúc} & \textbf{Điểm cơ bản} \\
+\midrule
+$1$ & $100$ \\
+$2$ & $300$ \\
+$3$ & $500$ \\
+$4$ (Tetris) & $800$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Điểm nhận được từ việc xóa hàng được nhân với cấp độ hiện tại
+của người chơi. Trong hệ thống tính điểm hiện đại thông dụng,
+cấp độ được sử dụng là cấp độ trước khi hoàn thành lần xóa hàng
+đó. Ngoài ra, người chơi còn có thể nhận điểm thưởng khi điều
+khiển khối rơi: mỗi ô rơi bằng \textit{soft drop} được cộng
+$1$ điểm và mỗi ô rơi bằng \textit{hard drop} được cộng $2$
+điểm~\cite{tetris_scoring}.
+
+Trong các phiên bản hiện đại, một số cơ chế bổ sung như
+\textit{Combo} và \textit{Back-to-Back} cũng được sử dụng để
+thưởng cho việc xóa hàng liên tiếp hoặc thực hiện các thao tác
+khó. Chẳng hạn, xóa bốn hàng cùng lúc được gọi là một
+\textit{Tetris}, là thao tác xóa hàng cơ bản mang lại điểm cao
+nhất trong bảng điểm trên. Việc duy trì các chuỗi xóa hàng
+liên tiếp có thể giúp người chơi gia tăng điểm số đáng kể
+\cite{tetris_scoring}.
+
+\subsection{Cấp độ và tốc độ rơi}
+
+Trong các chế độ chơi thông dụng, cấp độ thường tăng khi người
+chơi hoàn thành một số lượng hàng nhất định. Chẳng hạn, chế độ
+\textit{Marathon} phổ biến sử dụng mốc $10$ hàng được xóa để
+tăng một cấp độ. Tuy nhiên, số hàng cần thiết và cách xác định
+cấp độ có thể thay đổi tùy theo phiên bản hoặc chế độ chơi
+\cite{tetris_guideline,tetris_official}.
+
+Khi cấp độ tăng, tốc độ rơi của các khối thường được điều chỉnh
+nhanh hơn, đồng thời điểm số nhận được từ việc xóa hàng cũng
+tăng theo cấp độ. Ở những cấp độ thấp, người chơi có nhiều thời
+gian để quan sát và lựa chọn vị trí đặt khối. Ngược lại, ở những
+cấp độ cao, tốc độ rơi lớn khiến việc điều khiển đòi hỏi sự chính
+xác và phản xạ nhanh hơn. Sự gia tăng tốc độ này tạo nên áp lực
+đặc trưng của Tetris, đồng thời làm tăng độ khó trong quá trình
+chơi~\cite{tetris_official,tetris_scoring}.
+
+\subsection{Điều kiện thua}
+
+Trò chơi kết thúc khi người chơi rơi vào trạng thái
+\textit{top out}, tức không còn khả năng đưa khối mới vào khu vực
+chơi hợp lệ. Tùy theo phiên bản, tình trạng này có thể xảy ra
+khi khối mới xuất hiện bị chồng lấn với các khối đã có
+(\textit{block out}), hoặc khi một khối bị khóa hoàn toàn phía
+trên vùng chơi hiển thị (\textit{lock out}). Một số phiên bản
+còn có những quy tắc bổ sung liên quan đến giới hạn chiều cao
+của khu vực chơi~\cite{tetris_topout,tetris_guideline}.
+
+Khi điều kiện kết thúc được kích hoạt, trò chơi dừng lại và
+thường hiển thị điểm số cuối cùng cùng thông báo
+\textit{Game Over}. Người chơi có thể bắt đầu một ván mới
+để tiếp tục thử thách khả năng sắp xếp khối và cải thiện
+điểm số của mình.
