@@ -80,7 +80,18 @@ blocks = [
          [' ', ' ', ' ', ' ']]
 ]
 
+cur = blocks[0]  # khoi dang roi (ma tran 4x4)
+nextB = 0        # so thu tu khoi tiep theo trong blocks
+score = 0
+level = 1
+lines = 0        # tong so dong da xoa
+speed = 0.5      # so giay cho moi lan khoi roi
 
+
+
+#================================================================================================================
+# Lâm: chỉnh lại khối, điều khiển, xoay
+#================================================================================================================
 def canMove(dx, dy):
     for i in range(4):
         for j in range(4):
@@ -108,15 +119,70 @@ def boardDelBlock():
                 board[y + i][x + j] = ' '
 
 
-def initBoard():
-    for i in range(H):
-        for j in range(W):
-            if i == 0 or i == H - 1 or j == 0 or j == W - 1:
-                board[i][j] = '#'
-            else:
-                board[i][j] = ' '
+def rotate(m):
+    return m
 
 
+def newBlock():
+    global cur, nextB, x, y, b
+    b = nextB
+    cur = blocks[b]
+    nextB = random.randint(0, 6)
+    x = 5
+    y = 0
+
+
+def handleKey(c):
+    global x, y
+    if c == 'a' and canMove(-1, 0):
+        x -= 1
+    if c == 'd' and canMove(1, 0):
+        x += 1
+    if c == 'q':
+        return 'quit'
+    return None
+
+
+
+#================================================================================================================
+# Phát: xóa dòng, nâng level/tốc độ 
+#================================================================================================================
+def removeLine():
+    return 0
+
+
+def getLevel(totalLines):
+    return 1
+
+
+def getSpeed(level):
+    return 0.5
+
+
+
+#================================================================================================================
+# Nhân: tính điểm, game over, chơi lại
+#================================================================================================================
+def addScore(score, n, level):
+    return score
+
+
+def isGameOver():
+    return False
+
+
+def gameOverScreen():
+    return 'q'
+
+
+def resetGame():
+    pass
+
+
+
+#================================================================================================================
+# Thơ: giao dien 
+#================================================================================================================
 def draw():
     os.system("cls")
 
@@ -126,62 +192,48 @@ def draw():
         print()
 
 
-def removeLine():
-    i = H - 2
-    while i > 0:
-        j = 0
-        while j < W:
-            if board[i][j] == ' ':
-                break
-            j += 1
-        if j == W:
-            ii = i
-            while ii > 1:
-                for jj in range(W):
-                    board[ii][jj] = board[ii - 1][jj]
-                ii -= 1
-            for jj in range(W):
-                if jj == 0 or jj == W - 1:
-                    board[1][jj] = '#'
-                else:
-                    board[1][jj] = ' '
-            i += 1
-            draw()
-            time.sleep(0.2)
-        i -= 1
+
+#================================================================================================================
+# Thịnh
+#================================================================================================================
+def initBoard():
+    for i in range(H):
+        for j in range(W):
+            if i == 0 or i == H - 1 or j == 0 or j == W - 1:
+                board[i][j] = '#'
+            else:
+                board[i][j] = ' '
 
 
 def main():
-    global x, y, b
+    global y, nextB, score, level, lines, speed
 
     random.seed(time.time())
-    x = 5
-    y = 0
-    b = random.randint(0, 32767) % 7
+    nextB = random.randint(0, 6)
     initBoard()
-    while 1:
+    newBlock()
+    while True:
         boardDelBlock()
         if msvcrt.kbhit():
-            c = msvcrt.getwch()
-            if c == 'a' and canMove(-1, 0):
-                x -= 1
-            if c == 'd' and canMove(1, 0):
-                x += 1
-            if c == 'x' and canMove(0, 1):
-                y += 1
-            if c == 'q':
+            if handleKey(msvcrt.getwch()) == 'quit':
                 break
         if canMove(0, 1):
             y += 1
         else:
             block2Board()
-            removeLine()
-            x = 5
-            y = 0
-            b = random.randint(0, 32767) % 7
+            n = removeLine()
+            lines += n
+            score = addScore(score, n, level)
+            level = getLevel(lines)
+            speed = getSpeed(level)
+            newBlock()
+            if isGameOver():
+                if gameOverScreen() == 'q':
+                    break
+                resetGame()
         block2Board()
         draw()
-        time.sleep(0.5)
+        time.sleep(speed)
     return 0
 
 

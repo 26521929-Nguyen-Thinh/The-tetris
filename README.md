@@ -10,3 +10,7 @@ Một game Tetris cơ bản code bằng `Python 3`
 | 4 | Thái Trí Nhân | 26521457 | Thành viên | 
 | 5 | Võ Ngọc Thơ | 25521792 | Thành viên | 
 
+
+
+# Phân công công việc
+- [Tuần 2: phân chia code game Tetris](tuan_2.md)
