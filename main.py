@@ -90,7 +90,7 @@ def rotate(m):
 def newBlock():
     global cur, nextB, x, y, b
     b = nextB
-    cur = blocks[b]
+    cur = [row[:] for row in blocks[b]]
     nextB = random.randint(0, 6)
     x = 5
     y = 0
