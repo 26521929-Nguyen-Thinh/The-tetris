@@ -59,7 +59,7 @@ speed = 0.5      # so giay cho moi lan khoi roi
 def canMove(dx, dy):
     for i in range(4):
         for j in range(4):
-            if blocks[b][i][j] != ' ':
+            if cur[i][j] != ' ':
                 xt = x + j + dx
                 yt = y + i + dy
                 if xt < 1 or xt >= W - 1 or yt >= H - 1:
@@ -72,14 +72,14 @@ def canMove(dx, dy):
 def block2Board():
     for i in range(4):
         for j in range(4):
-            if blocks[b][i][j] != ' ':
-                board[y + i][x + j] = blocks[b][i][j]
+            if cur[i][j] != ' ':
+                board[y + i][x + j] = cur[i][j]
 
 
 def boardDelBlock():
     for i in range(4):
         for j in range(4):
-            if blocks[b][i][j] != ' ':
+            if cur[i][j] != ' ':
                 board[y + i][x + j] = ' '
 
 
