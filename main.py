@@ -165,12 +165,13 @@ def removeLine():
 
 
 def getLevel(totalLines):
-    return 1
+    level = totalLines // 10 + 1
+    return level
 
 
 def getSpeed(level):
-    return 0.5
-
+    speed = max(0.1, 0.5 - 0.05*(level-1))
+    return speed
 
 
 #================================================================================================================
