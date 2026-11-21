@@ -97,12 +97,35 @@ def newBlock():
 
 
 def handleKey(c):
-    global x, y
+    global x, y, cur
+    
     if c == 'a' and canMove(-1, 0):
         x -= 1
+
     if c == 'd' and canMove(1, 0):
         x += 1
+
+    if c == 's' and canMove(0, 1):
+        y += 1
+
+    if c == ' ':
+        while(canMove(0, 1)):
+            y += 1
+
+    if c == 'w':
+        old = cur
+        cur = rotate(cur)
+        if( not canMove(0, 0)):
+            cur = old
+
+    if c == 'p':
+        print("Bạn đã tạm dừng trò chơi, vui lòng nhấn phím 'p' để tiếp tục")
+        while(True):     
+            if msvcrt.getwch() == 'p':
+                break
+
     if c == 'q':
+        print("Bạn đã ấn phím 'q' để thoát khỏi màn chơi")
         return 'quit'
     return None
 
