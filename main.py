@@ -164,19 +164,69 @@ def getSpeed(level):
 # Nhân: tính điểm, game over, chơi lại
 #================================================================================================================
 def addScore(score, n, level):
-    return score
+    bang = [0, 100, 300, 500, 800]
+    if n <= 0:
+        return score
+    if n > 4:
+        n = 4
+    return score + bang[n] * level
 
 
 def isGameOver():
-    return False
+    return not canMove(0, 0)
+
+
+def nhan_highscorePath():
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), "highscore.txt")
+
+
+def nhan_readHighscore():
+    try:
+        with open(nhan_highscorePath(), "r") as f:
+            return int(f.read().strip())
+    except (OSError, ValueError):
+        return 0
+
+
+def nhan_writeHighscore(value):
+    try:
+        with open(nhan_highscorePath(), "w") as f:
+            f.write(str(value))
+    except OSError:
+        pass
 
 
 def gameOverScreen():
-    return 'q'
+    high = nhan_readHighscore()
+    if score > high:
+        high = score
+        nhan_writeHighscore(high)
+
+    os.system("cls")
+    print("=========================")
+    print("        GAME OVER")
+    print("=========================")
+    print("Diem cua van nay :", score)
+    print("Diem cao nhat    :", high)
+    print()
+    print("Bam r de choi lai, q de thoat")
+    while msvcrt.kbhit():
+        msvcrt.getwch()
+
+    while True:
+        c = msvcrt.getwch().lower()
+        if c == 'r' or c == 'q':
+            return c
 
 
 def resetGame():
-    pass
+    global score, lines, level, speed
+    initBoard()
+    score = 0
+    lines = 0
+    level = 1
+    speed = 0.5
+    newBlock()
 
 
 
