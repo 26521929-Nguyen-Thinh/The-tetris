@@ -84,7 +84,11 @@ def boardDelBlock():
 
 
 def rotate(m):
-    return m
+    rotated_m = [[' ' for _ in range(4)] for _ in range(4)]
+    for i in range(4):
+        for j in range(4):
+            rotated_m[i][j] = m[3 - j][i]
+    return rotated_m
 
 
 def newBlock():
@@ -128,7 +132,6 @@ def handleKey(c):
         print("Bạn đã ấn phím 'q' để thoát khỏi màn chơi")
         return 'quit'
     return None
-
 
 
 #================================================================================================================
