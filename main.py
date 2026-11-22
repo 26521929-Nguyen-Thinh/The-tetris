@@ -14,42 +14,6 @@ y = 0
 b = 0
 
 blocks = [
-        [[' ', 'I', ' ', ' '],
-         [' ', 'I', ' ', ' '],
-         [' ', 'I', ' ', ' '],
-         [' ', 'I', ' ', ' ']],
-        [[' ', 'I', ' ', ' '],
-         [' ', 'I', ' ', ' '],
-         [' ', 'I', ' ', ' '],
-         [' ', 'I', ' ', ' ']],
-        [[' ', ' ', ' ', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', ' ', ' ', ' ']],
-        [[' ', ' ', ' ', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', ' ', ' ', ' ']],
-        [[' ', ' ', ' ', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', ' ', ' ', ' ']],
-        [[' ', ' ', ' ', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', ' ', ' ', ' ']],
-        [[' ', ' ', ' ', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', ' ', ' ', ' ']],
-        [[' ', ' ', ' ', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', ' ', ' ', ' ']],
-        [[' ', ' ', ' ', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', 'O', 'O', ' '],
-         [' ', ' ', ' ', ' ']],
         [[' ', ' ', ' ', ' '],
          ['I', 'I', 'I', 'I'],
          [' ', ' ', ' ', ' '],
@@ -95,7 +59,7 @@ speed = 0.5      # so giay cho moi lan khoi roi
 def canMove(dx, dy):
     for i in range(4):
         for j in range(4):
-            if blocks[b][i][j] != ' ':
+            if cur[i][j] != ' ':
                 xt = x + j + dx
                 yt = y + i + dy
                 if xt < 1 or xt >= W - 1 or yt >= H - 1:
@@ -108,40 +72,66 @@ def canMove(dx, dy):
 def block2Board():
     for i in range(4):
         for j in range(4):
-            if blocks[b][i][j] != ' ':
-                board[y + i][x + j] = blocks[b][i][j]
+            if cur[i][j] != ' ':
+                board[y + i][x + j] = cur[i][j]
 
 
 def boardDelBlock():
     for i in range(4):
         for j in range(4):
-            if blocks[b][i][j] != ' ':
+            if cur[i][j] != ' ':
                 board[y + i][x + j] = ' '
 
 
 def rotate(m):
-    return m
+    rotated_m = [[' ' for _ in range(4)] for _ in range(4)]
+    for i in range(4):
+        for j in range(4):
+            rotated_m[i][j] = m[3 - j][i]
+    return rotated_m
 
 
 def newBlock():
     global cur, nextB, x, y, b
     b = nextB
-    cur = blocks[b]
+    cur = [row[:] for row in blocks[b]]
     nextB = random.randint(0, 6)
     x = 5
     y = 0
 
 
 def handleKey(c):
-    global x, y
+    global x, y, cur
+    
     if c == 'a' and canMove(-1, 0):
         x -= 1
+
     if c == 'd' and canMove(1, 0):
         x += 1
+
+    if c == 's' and canMove(0, 1):
+        y += 1
+
+    if c == ' ':
+        while(canMove(0, 1)):
+            y += 1
+
+    if c == 'w':
+        old = cur
+        cur = rotate(cur)
+        if( not canMove(0, 0)):
+            cur = old
+
+    if c == 'p':
+        print("Bạn đã tạm dừng trò chơi, vui lòng nhấn phím 'p' để tiếp tục")
+        while(True):     
+            if msvcrt.getwch() == 'p':
+                break
+
     if c == 'q':
+        print("Bạn đã ấn phím 'q' để thoát khỏi màn chơi")
         return 'quit'
     return None
-
 
 
 #================================================================================================================
