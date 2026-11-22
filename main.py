@@ -148,16 +148,30 @@ def handleKey(c):
 # Phát: xóa dòng, nâng level/tốc độ 
 #================================================================================================================
 def removeLine():
-    return 0
+    r = H - 2
+    n = 0
+    
+    while r >= 1:
+        
+        if all(cell != " " for cell in board[r]):
+            del board[r]
+            board.insert(1, ["#"] + [" "]*(W-2) + ["#"])
+            n += 1
+        
+        else:
+            r -= 1
+    
+    return n
 
 
 def getLevel(totalLines):
-    return 1
+    level = totalLines // 10 + 1
+    return level
 
 
 def getSpeed(level):
-    return 0.5
-
+    speed = max(0.1, 0.5 - 0.05*(level-1))
+    return speed
 
 
 #================================================================================================================
