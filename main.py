@@ -238,12 +238,28 @@ def resetGame():
 # Thơ: giao dien 
 #================================================================================================================
 def draw():
+    global board, score, level, lines
     os.system("cls")
-
-    for i in range(H):
-        for j in range(W):
-            print(board[i][j], end='')
-        print()
+    
+    for i in range(len(board)):
+        row_str = ""
+        for j in range(len(board[i])):
+            cell = board[i][j]
+            if cell == '#':
+                row_str += '▓▓'
+            elif cell == ' ':
+                row_str += '  '
+            else:
+                row_str += '██'
+        
+        if i == 0:
+            row_str += "    Score: " + str(score)
+        elif i == 1:
+            row_str += "    Level: " + str(level)
+        elif i == 2:
+            row_str += "    Lines: " + str(lines)
+            
+        print(row_str)
 
 
 
